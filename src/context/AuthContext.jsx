@@ -16,7 +16,9 @@ export const AuthProvider = ({ children }) => {
         try {
           const response = await axiosClient.get('/api/auth/users/me');
           if (response.data.success) {
-            setUser(response.data.user);
+            // Check if user is nested inside data or at root
+            const userData = response.data.data?.user || response.data.user || response.data.data;
+            setUser(userData);
           }
         } catch (error) {
           console.error("Session verification failed", error);
@@ -39,9 +41,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axiosClient.post('/api/auth/users/login', { email, password });
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        setUser(response.data.user);
+        // Extract token and user from response.data.data if they exist, otherwise fallback
+        const payload = response.data.data || response.data;
+        localStorage.setItem('token', payload.token);
+        localStorage.setItem('user', JSON.stringify(payload.user));
+        setUser(payload.user);
         return { success: true };
       }
       return { success: false, message: 'Invalid response from server' };
@@ -54,9 +58,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axiosClient.post('/api/auth/users/register', { email, password, role: 'USER' });
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        setUser(response.data.user);
+        const payload = response.data.data || response.data;
+        localStorage.setItem('token', payload.token);
+        localStorage.setItem('user', JSON.stringify(payload.user));
+        setUser(payload.user);
         return { success: true };
       }
       return { success: false, message: 'Registration failed' };

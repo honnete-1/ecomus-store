@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axiosClient from '../api/axiosClient';
-import { ArrowLeft, ShoppingBag, Check } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check, ImageOff } from 'lucide-react';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -93,7 +93,7 @@ const ProductDetails = () => {
     );
   }
 
-  const imageUrl = product.images?.[0]?.url || 'https://via.placeholder.com/600x800?text=No+Image';
+  const imageUrl = product.images?.[0]?.url;
 
   return (
     <div className="py-8">
@@ -104,12 +104,19 @@ const ProductDetails = () => {
       <div className="flex flex-col md:flex-row gap-12">
         {/* Images */}
         <div className="w-full md:w-1/2">
-          <div className="bg-light-gray rounded-lg overflow-hidden aspect-[4/5]">
-            <img 
-              src={imageUrl} 
-              alt={product.name} 
-              className="w-full h-full object-cover"
-            />
+          <div className="bg-light-gray rounded-lg overflow-hidden aspect-[4/5] flex items-center justify-center">
+            {imageUrl ? (
+              <img 
+                src={imageUrl} 
+                alt={product.name} 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center text-gray-400">
+                <ImageOff className="w-16 h-16 mb-4 opacity-40" />
+                <span className="text-xs font-medium uppercase tracking-widest opacity-50">No Image Available</span>
+              </div>
+            )}
           </div>
         </div>
 
