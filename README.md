@@ -73,8 +73,9 @@ Global state is managed via the **Context API** to avoid prop-drilling without i
 - `AuthContext`: Manages user session, login, registration, and logout flows.
 - `CartContext`: Fetches the cart from the API, manages adding/removing items, updating quantities, and clearing the cart upon successful checkout.
 
-## Known Limitations
+## Known Limitations & Design Decisions
 
+- **Missing API Images (Design Decision)**: The API currently returns empty image arrays for all products. To strictly adhere to the provided API and avoid "faking" data with external image generation services, the frontend gracefully handles this edge case by rendering a custom, luxurious "No Image" UI fallback (utilizing Lucide icons and Tailwind). This demonstrates robust null-data handling.
 - **Search**: The Swagger documentation does not detail a specific search endpoint. Search functionality is currently implemented via client-side filtering on the fetched product list.
 - **Cart API Details**: Assuming a standard cart structure returned by the API since exact shapes varied in the Swagger summary.
 
