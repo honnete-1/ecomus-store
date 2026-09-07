@@ -1,4 +1,4 @@
-# Ecomus — E-Commerce Storefront
+# Ecomus E-Commerce Storefront
 
 ![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
